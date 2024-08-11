@@ -73,10 +73,10 @@ char press_detect(char debounce)
 int main (void)
 {
 	/* Setup */
-	DDRC &=~(1<<PC0);
+	DDRC &= ~(1<<PORTC);
 	PORTC |= 1<<PORTC0;
 	DDRB = 0xFF;
-	unsigned char secuencia = 1;
+	unsigned char sequence = 1;
 	PORTB = 0b10000001;
 	uint8_t P0_3;
 	uint8_t P4_7;
@@ -91,9 +91,9 @@ int main (void)
 		DebouncedKeySwitch(&key_changed, &key_pressed);
 		if (press_detect(key_pressed))
 		{
-			secuencia = !secuencia;
+			sequence = !sequence;
 			PORTB = 0x00;
-			if (secuencia)
+			if (sequence)
 			{
 				PORTB = 0b10000001;
 			}
@@ -104,7 +104,7 @@ int main (void)
 		}
 		
 		
-		if (secuencia)
+		if (sequence)
 		{
 			if (PORTB == 0b00011000)
 			{
